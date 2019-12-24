@@ -1,0 +1,120 @@
+{
+  "api": {
+    "services": [
+      "HandlerService",
+      "LoggerService",
+      "StatsService",
+      "RuleService"
+    ],
+    "tag": "api"
+  },
+  "inbounds": [{
+    "listen": "127.0.0.1",
+    "port": 2333,
+    "protocol": "dokodemo-door",
+    "settings": {
+      "address": "127.0.0.1"
+    },
+    "tag": "api"
+  }
+  ],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "policy": {
+    "levels": {
+      "0": {
+        "connIdle": 300,
+        "downlinkOnly": 5,
+        "handshake": 4,
+        "statsUserDownlink": true,
+        "statsUserUplink": true,
+        "uplinkOnly": 2
+      }
+    },
+    "system": {
+      "statsInboundDownlink": false,
+      "statsInboundUplink": false
+    }
+  },
+  "reverse": {},
+  "routing": {
+    "settings": {
+      "rules": [{
+        "ip": [
+          "0.0.0.0/8",
+          "10.0.0.0/8",
+          "100.64.0.0/10",
+          "127.0.0.0/8",
+          "169.254.0.0/16",
+          "172.16.0.0/12",
+          "192.0.0.0/24",
+          "192.0.2.0/24",
+          "192.168.0.0/16",
+          "198.18.0.0/15",
+          "198.51.100.0/24",
+          "203.0.113.0/24",
+          "::1/128",
+          "fc00::/7",
+          "fe80::/10"
+        ],
+        "outboundTag": "blocked",
+        "protocol": [
+          "bittorrent"
+        ],
+        "type": "field"
+      },
+        {
+          "inboundTag": [
+            "api"
+          ],
+          "outboundTag": "api",
+          "type": "field"
+        },
+        {
+          "domain": [
+            "regexp:(api|ps|sv|offnavi|newvector|ulog\\.imap|newloc)(\\.map|)\\.(baidu|n\\.shifen)\\.com",
+            "regexp:(.+\\.|^)(360|so)\\.(cn|com)",
+            "regexp:(.?)(xunlei|sandai|Thunder|XLLiveUD)(.)",
+            "regexp:(.*.||)(dafahao|minghui|dongtaiwang|epochtimes|ntdtv|falundafa|wujieliulan).(org|com|net)",
+            "regexp:(Subject|HELO|SMTP)",
+            "regexp:(.+.|^)(360|so).(cn|com)",
+            "regexp:(torrent|.torrent|peer_id=|info_hash|get_peers|find_node|BitTorrent|announce_peer|announce.php?passkey=)",
+            "regexp:(^.*@)(guerrillamail|guerrillamailblock|sharklasers|grr|pokemail|spam4|bccto|chacuo|027168).(info|biz|com|de|net|org|me|la)",
+            "regexp:BitTorrent protocol"
+          ],
+          "outboundTag": "blocked",
+          "type": "field"
+        }
+      ]
+    },
+    "strategy": "rules"
+  },
+  "stats": {},
+  "sspanel": {
+      "nodeid": SS_PANEL_NODE_ID,
+      "checkRate": 60,
+      "SpeedTestCheckRate": 6,
+      "panelUrl": "SS_PANEL_URL",
+      "panelKey": "SS_PANEL_MU_KEY",
+      "downWithPanel": 1,
+      "mysql": {
+        "host": "5x.xxx.xxx.x1",
+        "port": 3306,
+        "user": "wwwxxxhk",
+        "password": "nbdiD.xxxxT3Mj",
+        "dbname": "wwwxxxhk"
+      },
+      "paneltype": 0,
+      "usemysql": 1
+    }
+}
+
+

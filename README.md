@@ -158,3 +158,21 @@ rm  -rf /usr/local/aegis*
 rm -rf /usr/sbin/aliyun*
 chkconfig --del cloudmonitor
 ```
+# For websocket
+```
+[nginx]
+    location /ws { # 与 V2Ray 配置中的 path 保持一致
+      if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+          return 404;
+      }
+      proxy_redirect off;
+      proxy_pass http://127.0.0.1:7888; # 假设WebSocket监听在环回地址的10000端口上
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+      # Show real IP in v2ray access.log
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+ ```

@@ -104,3 +104,27 @@ wget -N --no-check-certificate "https://raw.githubusercontent.com/chiakge/Linux-
 chmod +x tcp.sh
 ./tcp.sh
 ```
+
+# v2ray config for websocket
+```
+  "inbounds": [{
+    "listen": "127.0.0.1",
+    "port": 7889,//need nginx to stagger the port, otherwise it will conflict
+    "protocol": "dokodemo-door",
+    "settings": {
+      "address": "127.0.0.1"
+    },
+      "streamSettings": {
+        "networks":"ws",
+        "wsSettings": {
+        "path": "/ws"
+        }
+      },
+    "tag": "api"
+  }]
+```
+
+# sspanel-uim config For websocket
+```
+youdomain;0;16;tls;ws;path=/ws|host=youdomain|server=youdomain|inside_port=7888|outside_port=443
+```

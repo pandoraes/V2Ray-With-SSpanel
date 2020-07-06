@@ -1,10 +1,3 @@
-# V2Ray With SSpanel File
-
-**Thanks a lot to @Anankke 、 V2ray Team、 @rico93**
-
-**Note:**
-> This edition is only for early adopters experience and technical exchanges. If you want to experience the full-featured edition, please contact @rico93 or [telegram channel](https://t.me/rico_v2)
-
 ## For NODE
 
 ```
@@ -59,29 +52,6 @@ nodeid : Your Node ID, you can set this in your SSpanel
 >   - path:`/`
 >   - Confuse:`tls`
 
-### Start V2ray Node And Enable Auto Start
-
-```
-systemctl start v2ray && systemctl enable v2ray
-# checkout v2ray status
-systemctl status v2ray
-● v2ray.service - V2Ray Service
-   Loaded: loaded (/etc/systemd/system/v2ray.service; enabled; vendor preset: disabled)
-   Active: active (running) since Sat 2019-10-12 18:37:48 CST; 11s ago
- Main PID: 10450 (v2ray)
-   CGroup: /system.slice/v2ray.service
-           └─10450 /usr/bin/v2ray/v2ray -config /etc/v2ray/config.json
-
-Oct 12 18:37:48 vultr.guest systemd[1]: Started V2Ray Service.
-Oct 12 18:37:48 vultr.guest v2ray[10450]: V2Ray 4.19 (Po) Custom
-Oct 12 18:37:48 vultr.guest v2ray[10450]: A unified platform for anti-censorship.
-Oct 12 18:37:48 vultr.guest v2ray[10450]: 2019/10/12 18:37:48 [Warning] v2ray.com/core: V2Ray 4.19 started
-Oct 12 18:37:51 vultr.guest v2ray[10450]: 2019/10/12 18:37:51 [Warning] SSPanelPlugin: Connected gRPC server "127.0.0.1:2333"
-Oct 12 18:37:52 vultr.guest v2ray[10450]: 2019/10/12 18:37:52 [Warning] SSPanelPlugin: Before Update, Current Users 0 need to be add 1 need to be romved 0
-Oct 12 18:37:52 vultr.guest v2ray[10450]: 2019/10/12 18:37:52 [Warning] SSPanelPlugin: After Update, Current Users 1 need to be add 0 need to be romved 0
-
-```
-
 
 # For Aliyun User
 Uninstall YunDun
@@ -111,12 +81,12 @@ chkconfig --del cloudmonitor
 # For websocket
 ```
 [nginx]
-    location /ws { # 与 V2Ray 配置中的 path 保持一致
-      if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+    location /ws { # It is consistent with the path in v2ray configuration
+      if ($http_upgrade != "websocket") { # 404 when websocket negotiation fails
           return 404;
       }
       proxy_redirect off;
-      proxy_pass http://127.0.0.1:7888; # 假设WebSocket监听在环回地址的10000端口上
+      proxy_pass http://127.0.0.1:7888; # Suppose websocket is listening on port 10000 of the loopback address
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "upgrade";

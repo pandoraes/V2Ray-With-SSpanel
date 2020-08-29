@@ -1,4 +1,4 @@
-## For NODE
+## For NODE V2RAY 接入SSpanel
 
 ```
 bash <(curl -L -s  https://raw.githubusercontent.com/pandoraes/V2Ray-With-SSpanel/master/install-release.sh) --panelurl https://xxxx --panelkey xxxx --nodeid NODEID
